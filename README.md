@@ -24,13 +24,6 @@ By placing PgBouncer in between the web application and the actual PostgreSQL da
 Available tags
 --------------
 
-Base images:
-
-- `latest` ([Dockerfile](https://github.com/edoburu/docker-pgbouncer/blob/master/Dockerfile)) - Default and latest version.
-- `1.15.0` ([Dockerfile](https://github.com/edoburu/docker-pgbouncer/blob/v1.15.x/Dockerfile)) - Latest version.
-- `1.14.0` ([Dockerfile](https://github.com/edoburu/docker-pgbouncer/blob/v1.14.x/Dockerfile)) - Latest version.
-- `1.12.0` ([Dockerfile](https://github.com/edoburu/docker-pgbouncer/blob/v1.12.x/Dockerfile)) - Latest version.
-
 Images are automatically rebuild on Alpine Linux updates.
 
 
@@ -41,7 +34,7 @@ Usage
 docker run --rm \
     -e DATABASE_URL="postgres://user:pass@postgres-host/database" \
     -p 5432:5432 \
-    edoburu/pgbouncer
+    markandreev/pgbouncer
 ```
 
 
@@ -54,7 +47,7 @@ docker run --rm \
     -e DB_HOST=postgres-host \
     -e DB_NAME=database \
     -p 5432:5432 \
-    edoburu/pgbouncer
+    markandreev/pgbouncer
 ```
 
 Connecting should work as expected:
@@ -66,7 +59,7 @@ psql 'postgresql://user:pass@localhost/dbname'
 Configuration
 -------------
 
-Almost all settings found in the [pgbouncer.ini](https://pgbouncer.github.io/config.html) can be defined as environment variables, except a few that make little sense in a Docker environment (like port numbers, syslog and pid settings). See the [entrypoint script](https://github.com/edoburu/docker-pgbouncer/blob/master/entrypoint.sh) for details. For example:
+Almost all settings found in the [pgbouncer.ini](https://pgbouncer.github.io/config.html) can be defined as environment variables, except a few that make little sense in a Docker environment (like port numbers, syslog and pid settings). See the [entrypoint script](https://github.com/markandreev/docker-pgbouncer/blob/master/entrypoint.sh) for details. For example:
 
 ```sh
 docker run --rm \
@@ -75,20 +68,20 @@ docker run --rm \
     -e SERVER_RESET_QUERY="DISCARD ALL" \
     -e MAX_CLIENT_CONN=100 \
     -p 5432:5432
-    edoburu/pgbouncer
+    markandreev/pgbouncer
 ```
 
 
 Kubernetes integration
 ----------------------
 
-For example in Kubernetes, see the [examples/kubernetes folder](https://github.com/edoburu/docker-pgbouncer/tree/master/examples/kubernetes).
+For example in Kubernetes, see the [examples/kubernetes folder](https://github.com/markandreev/docker-pgbouncer/tree/master/examples/kubernetes).
 
 
 Docker Compose
 --------------
 
-For example in Docker Compose, see the [examples/docker-compose folder](https://github.com/edoburu/docker-pgbouncer/tree/master/examples/docker-compose).
+For example in Docker Compose, see the [examples/docker-compose folder](https://github.com/markandreev/docker-pgbouncer/tree/master/examples/docker-compose).
 
 
 PostgreSQL configuration
@@ -115,14 +108,14 @@ docker run --rm \
     -e DB_NAME=database \
     -v pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
     -p 5432:5432
-    edoburu/pgbouncer
+    markandreev/pgbouncer
 ```
 
 
 Or extend the `Dockerfile`:
 
 ```Dockerfile
-FROM edoburu/pgbouncer:1.11.0
+FROM markandreev/pgbouncer:1.11.0
 COPY pgbouncer.ini userlist.txt /etc/pgbouncer/
 ```
 
@@ -142,7 +135,7 @@ or:
 "username" "md5<md5 of password + username>"
 ```
 
-Use [examples/generate-userlist](https://github.com/edoburu/docker-pgbouncer/blob/master/examples/generate-userlist) to generate this file:
+Use [examples/generate-userlist](https://github.com/mrkandreev/docker-pgbouncer/blob/master/examples/generate-userlist) to generate this file:
 
 ```
 examples/generate-userlist >> userlist.txt
